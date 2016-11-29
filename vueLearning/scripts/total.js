@@ -80,3 +80,19 @@ var app7 = new Vue({
 })
 
 app7.groceryList.push({text:'my 2nd new items'})
+
+
+var vm = new Vue({
+  el:'#example',
+  data: {
+    message: "Hello"
+  },
+  computed:{
+    reversedMessage:function(){
+       return this.message.split('').reverse().join('')
+    }
+  }
+})
+
+console.log(vm.reversedMessage)
+vm.message = 'Goodbye'
