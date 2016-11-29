@@ -96,3 +96,97 @@ var vm = new Vue({
 
 console.log(vm.reversedMessage)
 vm.message = 'Goodbye'
+
+/*var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar',
+    fullName: 'Foo Bar'
+  },
+  watch: {
+    firstName: function (val) {
+      this.fullName = val + ' ' + this.lastName
+    },
+    lastName: function (val) {
+      this.fullName = this.firstName + ' ' + val
+    }
+  }
+})*/
+var vm1 = new Vue({
+  el: '#demo',
+  data:{
+    firstName:'Foo',
+    lastName:'Bar'
+  },
+  computed:{
+    fullName:{
+      get: function(){
+        return this.firstName+' '+this.lastName
+      },
+      set: function(newValue){
+        var names = newValue.split(' ')
+        this.firstName= names[0]
+        this.lastName = names[names.length - 1]
+      }
+    }
+  }
+
+})
+vm1.firstName = 'hugd'
+vm1.fullName='gary huang'
+console.log(vm1.lastName)
+
+var watchExampleVM = new Vue({
+  el:'#watch-example',
+  data: {
+    question:'',
+    answer: 'I cannot give you an answer until you ask a question!'
+  },
+  watch:{
+    question:function(newQuestion){
+      this.answer = 'Waiting for you to stop typing...'
+      this.getAnswer()
+    }
+  },
+  methods:{
+    getAnswer: _.debounce(
+      function () {
+        var vm = this
+        if(this.question){
+          if (this.question.indexOf('?') === -1) {
+            vm.answer = 'Questions usually contain a question mark. ;-)'
+             return
+          }
+        }else{
+          this.answer = 'Waiting for you to stop typing...'
+          return
+        }
+
+        vm.answer ='Thinking...'
+        axios.get('https://yesno.wtf/api')
+           .then(function(response){
+             vm.answer = _.capitalize(response.data.answer)
+           })
+           .catch(function(error){
+             vm.answer = 'Erro!Could not reach the API.'+error
+           })
+      },
+
+      500
+    )
+  }
+})
+
+var app8=new Vue({
+  el:"#app-8",
+  data: {
+    classN: {
+      red: false,
+      green:false,
+      blue:false
+    },
+    message:"dfgd"
+  }
+})
+app8.classN.red =true
