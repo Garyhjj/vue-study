@@ -4,8 +4,10 @@
 <meta charset="utf-8">
 <title>vue1</title>
 <link type="text/css" href="styles/mian.css" rel="stylesheet" />
+<link href="https://unpkg.com/animate.css@3.5.1/animate.min.css" rel="stylesheet" type="text/css">
 <script src="https://unpkg.com/vue/dist/vue.js">
 </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.14.1/lodash.min.js"></script>
 <script src="https://unpkg.com/axios@0.12.0/dist/axios.min.js"></script>
 <script src="https://unpkg.com/lodash@4.13.1/lodash.min.js"></script>
 
@@ -79,10 +81,209 @@
 
 </div>
 
+<div v-if="Math.random() <0.5">
+  Sorry
+</div>
+<div v-else>
+  Not sorry
+</div>
+<ul id="example-1">
+  <li v-for="item in items">
+    {{ item.message }}
+  </li>
+</ul>
+
+<ul id="example-2">
+  <li v-for="(item, index) in items">
+    {{ parentMessage }} - {{ index }} - {{ item.message }}
+  </li>
+</ul>
+<!-- 第二参数为键名，第三个参数为索引 -->
+<div id='app-10' v-for="(value, key, index) in object">
+  {{ index }}. {{ key }} : {{ value }}
+</div>
+
+<!-- 整数迭代 -->
+<div id='app-9'>
+  <span v-for="n in 10">{{ n }}</span>
+</div>
+
+<div id="todo-list-example">
+  <input
+    v-model="newTodoText"
+    v-on:keyup.enter="addNewTodo"
+    placeholder="Add a todo"
+  >
+  <!-- 回车触发函数 -->
+  <ul>
+    <li
+      is="todo-item"
+      v-for="(todo, index) in todos"
+      v-bind:title="todo"
+      v-on:remove="todos.splice(index, 1)"
+    ></li>
+  </ul>
+</div>
+
+<div id="app-11">
+  <ul>
+    <li v-for="n in evenNumbers(n)">{{ n }}</li>
+  </ul>
+
+</div>
+
+<!-- 事件处理 -->
+
+<div id="app-12">
+  <button v-on:click="counter +=1">增加 1</button>
+  <p>这个按钮被点击了 {{ counter }} 次。</p>
+</div>
+
+<div id="app-13">
+  <!-- `greet` 是在下面定义的方法名 -->
+  <button v-on:click="greet">Greet</button>
+</div>
+
+<!-- 阻止单击事件冒泡 -->
+<a v-on:click.stop="doThis"></a>
+<!-- 提交事件不再重载页面 -->
+<form v-on:submit.prevent="onSubmit"></form>
+<!-- 修饰符可以串联  -->
+<a v-on:click.stop.prevent="doThat"></a>
+<!-- 只有修饰符 -->
+<form v-on:submit.prevent></form>
+<!-- 添加事件侦听器时使用事件捕获模式 -->
+<div v-on:click.capture="doThis">...</div>
+<!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 -->
+<div v-on:click.self="doThat">...</div>
+
+<div id="app-14">
+  <input type="checkbox" id="checkbox" v-model="checked">
+  <label for="checkbox">{{ checked }}</label>
+</div>
+
+<div id="app-15">
+  <input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+  <label for="jack">Jack</label>
+  <input type="checkbox" id="john" value="John" v-model="checkedNames">
+  <label for="john">John</label>
+  <input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+  <label for="mike">Mike</label>
+<br>
+<span>Checked names: {{ checkedNames }}</span>
+
+</div>
+
+<!-- 单选 -->
+<div id="app-16">
+  <input type="radio" id="one" value="One" v-model="picked">
+  <label for="one">One</label>
+  <br>
+  <input type="radio" id="two" value="Two" v-model="picked">
+  <label for="two">Two</label>
+  <br>
+  <span>Picked: {{ picked }}</span>
+</div>
+
+<div id="app-17">
+  <p>
+    {{age}}
+  </p>
+  <input v-model.number='age' type="number" />
+
+</div>
+
+<div id="app-18">
+  <simple-counter></simple-counter>
+  <simple-counter></simple-counter>
+  <simple-counter></simple-counter>
+</div>
+
+<div id="counter-event-example">
+  <p>{{ total }}</p>
+  <button-counter v-on:increment="incrementTotal"></button-counter>
+  <button-counter v-on:increment="incrementTotal"></button-counter>
+</div>
+
+<div id="app-19">
+  <currency-input v-model="price"></currency-input>
+</div>
+
+<div id="app-20">
+  <app-layout>
+  <h1 slot="header">Here might be a page title</h1>
+  <p>A paragraph for the main content.</p>
+  <p>And another one.</p>
+  <p slot="footer">Here's some contact info</p>
+</app-layout>
+
+</div>
+<!--一步更新队列-->
+<div id="app-21">{{message}}</div>
 
 
+<!--过渡效果-->
+<div id="app-23">
+  <button v-on:click="show = !show">
+    Toggle
+  </button>
+  <transition name="fade">
+    <p v-if="show">hello</p>
+  </transition>
+</div>
 
+<div id="app-22">
+  <button @click="show = !show">
+    Toggle render
+  </button>
+  <transition name="slide-fade">
+    <p v-if="show">hello</p>
+  </transition>
+</div>
 
+<div id="app-24">
+  <button @click="show = !show">Toggle show</button>
+  <transition name="bounce">
+    <p v-if="show">Look at me!</p>
+  </transition>
+</div>
+
+<div id="app-25">
+  <button @click="show = !show">
+    Toggle render
+  </button>
+  <transition
+    name="custom-classes-transition"
+    enter-active-class="animated tada"
+    leave-active-class="animated bounceOutRight"
+  >
+    <p v-if="show">hello</p>
+  </transition>
+</div>
+
+<transition name="fade" mode="out-in">
+  <!-- ... 过渡模式mode，不再同时生效的进入和离开的过渡 ... -->
+</transition>
+
+<transition name="component-fade" mode="out-in">
+  <component v-bind:is="view"></component>
+</transition>
+
+<!-- ... 过渡模式mode，不再同时生效的进入和离开的过渡 ... -->
+<div id="list-complete-demo" class="demo">
+  <button v-on:click="shuffle">Shuffle</button>
+  <button v-on:click="add">Add</button>
+  <button v-on:click="remove">Remove</button>
+  <transition-group name="list-complete" tag="p">
+    <span
+      v-for="item in items"
+      v-bind:key="item"
+      class="list-complete-item"
+    >
+      {{ item }}
+    </span>
+  </transition-group>
+</div>
 
   <script type="text/javascript" src="scripts/total.js" /></script>
 </body>
